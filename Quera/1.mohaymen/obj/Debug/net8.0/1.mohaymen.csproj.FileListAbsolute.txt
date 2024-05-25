@@ -1,0 +1,15 @@
+E:\git\Competitive-Programming\Quera\1.mohaymen\obj\Debug\net8.0\1.mohaymen.GeneratedMSBuildEditorConfig.editorconfig
+E:\git\Competitive-Programming\Quera\1.mohaymen\obj\Debug\net8.0\1.mohaymen.AssemblyInfoInputs.cache
+E:\git\Competitive-Programming\Quera\1.mohaymen\obj\Debug\net8.0\1.mohaymen.AssemblyInfo.cs
+E:\git\Competitive-Programming\Quera\1.mohaymen\obj\Debug\net8.0\1.mohaymen.csproj.CoreCompileInputs.cache
+E:\git\Competitive-Programming\Quera\1.mohaymen\obj\Debug\net8.0\1.mohaymen.sourcelink.json
+E:\git\Competitive-Programming\Quera\1.mohaymen\bin\Debug\net8.0\1.mohaymen.exe
+E:\git\Competitive-Programming\Quera\1.mohaymen\bin\Debug\net8.0\1.mohaymen.deps.json
+E:\git\Competitive-Programming\Quera\1.mohaymen\bin\Debug\net8.0\1.mohaymen.runtimeconfig.json
+E:\git\Competitive-Programming\Quera\1.mohaymen\bin\Debug\net8.0\1.mohaymen.dll
+E:\git\Competitive-Programming\Quera\1.mohaymen\bin\Debug\net8.0\1.mohaymen.pdb
+E:\git\Competitive-Programming\Quera\1.mohaymen\obj\Debug\net8.0\1.mohaymen.dll
+E:\git\Competitive-Programming\Quera\1.mohaymen\obj\Debug\net8.0\refint\1.mohaymen.dll
+E:\git\Competitive-Programming\Quera\1.mohaymen\obj\Debug\net8.0\1.mohaymen.pdb
+E:\git\Competitive-Programming\Quera\1.mohaymen\obj\Debug\net8.0\1.mohaymen.genruntimeconfig.cache
+E:\git\Competitive-Programming\Quera\1.mohaymen\obj\Debug\net8.0\ref\1.mohaymen.dll
