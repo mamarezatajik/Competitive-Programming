@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using static System.Console;
 using static System.Math;
 using System.Linq;
-using System.Runtime.Versioning;
 
-#nullable disable
 
 public class Program {
     static Dictionary<string, List<int>> invertedIndex;
@@ -64,8 +62,9 @@ public class Program {
     }
 
     private static List<int> Solve(int n, Dictionary<string, object> json) {
+        List<int> res = new List<int>();
         if (json.Keys.First() == "and") {
-            List<int> res = new List<int>();
+            // List<int> res = new List<int>();
             List<HashSet<int>> res3 = new List<HashSet<int>>();
             foreach (var item in (List<object>)json["and"]) {
                 var res2 = Solve(n, (Dictionary<string, object>)item);
@@ -81,43 +80,59 @@ public class Program {
                 if (ok)
                     res.Add(i);
             }
-            return res;
+            // return res;
         }
         else if (json.Keys.First() == "or") {
-            HashSet<int> res = new HashSet<int>();
+            HashSet<int> res3 = new HashSet<int>();
             foreach (var item in (List<object>)json["or"]) {
                 var res2 = Solve(n, (Dictionary<string, object>)item);
                 foreach (var x in res2)
                 {
-                    res.Add(x);
+                    res3.Add(x);
                 }
             }
-            return res.ToList();
+            res = res3.ToList();
+            // return res;
         }
         else if (json.Keys.First() == "not") {
-            return new List<int>();
+            HashSet<int> hs = new HashSet<int>();
+            foreach (var item in (Dictionary<string, object>)json["not"]) {
+                string key = item.Key;
+                object value = item.Value;
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add(key, value);
+                List<int> res2 = Solve(n, dic);
+                foreach (var item2 in res2)
+                    hs.Add(item2);
+            }
+
+            for (int i = 1; i <= n; i++) {
+                if (!hs.Contains(i))
+                    res.Add(i);
+            }
         }
         else if (json.Keys.First() == "match") {
             if (invertedIndex.ContainsKey(json["match"].ToString()))
                 return invertedIndex[json["match"].ToString()];
             return new List<int>();
-        } else if (json.Keys.First() == "any") {
-            HashSet<int> res = new HashSet<int>();
+        } 
+        else if (json.Keys.First() == "any") {
+            HashSet<int> res2 = new HashSet<int>();
 
             foreach (var str in (List<object>)json["any"]) {
                 if (invertedIndex.ContainsKey(str.ToString()))
                     foreach (var index in invertedIndex[str.ToString()])
-                        res.Add(index);
+                        res2.Add(index);
             }
             
 
-            List<int> res2 = new List<int>();
-            res2 = res.ToList();
-            res2.Sort();
+            // List<int> res = new List<int>();
+            res = res2.ToList();
+            res.Sort();
 
-            return res2;
-        } else {
-            List<int> res = new List<int>();
+            // return res;
+        } 
+        else {                   //    "all"
             for (int i = 0; i < n; i++) {
                 bool ok = true;
                 foreach (var str in (List<object>)json["all"])
@@ -126,9 +141,23 @@ public class Program {
                 if (ok) {
                     res.Add(i + 1);
                 }
-            } 
-            return res;
+            }
         }
+
+        res.Sort();
+
+        if (json.ContainsKey("size")) {
+            WriteLine(json["size"]);
+            for (int i = 0; i < res.Count; i++) {
+                if (res[i] > int.Parse(json["size"].ToString())) {
+                    res.RemoveRange(i, res.Count - i);
+                    break;
+                }
+            }
+        }
+
+
+        return res;
     }
 }
 
@@ -197,4 +226,4 @@ public class JsonObjectCreator
 
         return json;
     }
-}
+} 

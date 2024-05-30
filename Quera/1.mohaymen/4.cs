@@ -22,7 +22,7 @@
 //             if (text[i] == ' ')
 //                 result.Append(' ');
 //             else
-//                 result.Append((char)(((text[i] - 'A' + _key) % 26) + 'A'));
+//                 result.Append((char)((((text[i] - 'A') + _key) % 26) + 'A'));
 //         }
 
 //         return result.ToString().ToUpper();
@@ -69,7 +69,7 @@
 //             if (text[i] == ' ')
 //                 result.Append(' ');
 //             else
-//                 result.Append((char)((_a * (text[i] - 'A') + _b) % 26 + 'A'));
+//                 result.Append((char)((((text[i] - 'A') * _a + _b) % 26) + 'A'));
 //         }
 
 //         return result.ToString().ToUpper();
@@ -92,7 +92,7 @@
 //             if (text[i] == ' ')
 //                 result.Append(' ');
 //             else
-//                 result.Append((char)_mapping[text[i] - 'A']);
+//                 result.Append((char)_mapping[(int)(text[i] - 'A')]);
 //         }
 
 //         return result.ToString().ToUpper();
@@ -164,6 +164,7 @@
 //                                 tmp.Append(input[j++]);
 //                         }
 //                         mapping = tmp.ToString();
+//                         j++;
 //                     }
 //                 }
 //             }
