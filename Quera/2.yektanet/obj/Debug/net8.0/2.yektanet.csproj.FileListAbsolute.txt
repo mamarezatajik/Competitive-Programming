@@ -1,0 +1,15 @@
+E:\git\Competitive-Programming\Quera\2.yektanet\bin\Debug\net8.0\2.yektanet.exe
+E:\git\Competitive-Programming\Quera\2.yektanet\bin\Debug\net8.0\2.yektanet.deps.json
+E:\git\Competitive-Programming\Quera\2.yektanet\bin\Debug\net8.0\2.yektanet.runtimeconfig.json
+E:\git\Competitive-Programming\Quera\2.yektanet\bin\Debug\net8.0\2.yektanet.dll
+E:\git\Competitive-Programming\Quera\2.yektanet\bin\Debug\net8.0\2.yektanet.pdb
+E:\git\Competitive-Programming\Quera\2.yektanet\obj\Debug\net8.0\2.yektanet.GeneratedMSBuildEditorConfig.editorconfig
+E:\git\Competitive-Programming\Quera\2.yektanet\obj\Debug\net8.0\2.yektanet.AssemblyInfoInputs.cache
+E:\git\Competitive-Programming\Quera\2.yektanet\obj\Debug\net8.0\2.yektanet.AssemblyInfo.cs
+E:\git\Competitive-Programming\Quera\2.yektanet\obj\Debug\net8.0\2.yektanet.csproj.CoreCompileInputs.cache
+E:\git\Competitive-Programming\Quera\2.yektanet\obj\Debug\net8.0\2.yektanet.sourcelink.json
+E:\git\Competitive-Programming\Quera\2.yektanet\obj\Debug\net8.0\2.yektanet.dll
+E:\git\Competitive-Programming\Quera\2.yektanet\obj\Debug\net8.0\refint\2.yektanet.dll
+E:\git\Competitive-Programming\Quera\2.yektanet\obj\Debug\net8.0\2.yektanet.pdb
+E:\git\Competitive-Programming\Quera\2.yektanet\obj\Debug\net8.0\2.yektanet.genruntimeconfig.cache
+E:\git\Competitive-Programming\Quera\2.yektanet\obj\Debug\net8.0\ref\2.yektanet.dll

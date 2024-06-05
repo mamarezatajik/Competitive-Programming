@@ -44,7 +44,7 @@ int deleteAndEarn(vector<int>& nums) {
             arr.push_back(num);
         cnt[num]++;
     }
-    sort(arr.begin(), arr.end);
+    sort(arr.begin(), arr.end());
 
     int n = arr.size();
     vector<int> dp (n);

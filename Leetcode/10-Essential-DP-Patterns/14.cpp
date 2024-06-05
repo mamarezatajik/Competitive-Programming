@@ -35,51 +35,41 @@ using namespace __gnu_pbds;
 ll mod = 1e9 + 7;
 
 
-    int maximalSquare(vector<vector<char>>& matrix) {
-        int n = matrix.size();
-        int m = matrix[0].size();
+    bool wordBreak(string s, vector<string>& wordDict) {
+        int len, n = wordDict.size();
+        set<string> dict;
+        for (int i = 0; i < n; i++) 
+            dict.insert(wordDict[i]);
+        n = s.size();
 
-        vector<vector<int>> dp (n, vector<int>(m));
-        bool ok = false;
-        int ans = INT_MIN;
+        vector<vector<bool>> dp (n, vector<bool>(n));
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (matrix[i][j] == '0')
-                    continue;
-                if (i == 0 || j == 0)
+        for (int j = 0; j < n; j++) {
+            for (int i = 0; i < j + 1; i++) {
+                string sub = s.substr(j - i, i + 1);
+                if (dict.count(sub))
                     dp[i][j] = 1;
-                else {
-                    if (dp[i - 1][j] == dp[i][j - 1] && dp[i][j - 1] && dp[i - 1][j - 1] == dp[i][j - 1]) {
-                        dp[i][j] = dp[i][j - 1] + 1;
-                        ans = max(ans, dp[i][j]);
+
+                if (dp[i][j]) {
+                    len = j - i - 1;
+                    for (int k = 0; k < len + 1; k++) {
+                        if (dp[k][len])
+                            dp[i + k + 1][j] = 1;
                     }
-                    else if (dp[i - 1][j] == 0 || dp[i][j - 1] == 0 || dp[i - 1][j - 1] == 0)
-                        dp[i][j] = 1;
-                    else
-                        dp[i][j] = min({dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]}) + 1;
                 }
-                ok = true;
             }
         }
 
-        print(0);
-        print_vec_vec(dp);
-
-        if (!ok)
-            return 0;
-        return max(ans * ans, 1);
+        return dp[n - 1][n - 1];
     }
 
 ll _main() {
-    ll n, m; cin >> n >> m;
-
-    vec<vec<char>> a (n, vec<char>(m));
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < m; j++) 
-            cin >> a[i][j];
-
-    return print(maximalSquare(a)), 0;
+    string s; cin >> s;
+    ll n; cin >> n;
+    vector<string> v (n);
+    for (int i = 0; i < n; i++) 
+        cin >> v[i];
+    return print(wordBreak(s, v)), 0;
 }
 
 

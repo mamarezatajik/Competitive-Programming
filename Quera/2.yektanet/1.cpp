@@ -35,51 +35,9 @@ using namespace __gnu_pbds;
 ll mod = 1e9 + 7;
 
 
-    int maximalSquare(vector<vector<char>>& matrix) {
-        int n = matrix.size();
-        int m = matrix[0].size();
-
-        vector<vector<int>> dp (n, vector<int>(m));
-        bool ok = false;
-        int ans = INT_MIN;
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (matrix[i][j] == '0')
-                    continue;
-                if (i == 0 || j == 0)
-                    dp[i][j] = 1;
-                else {
-                    if (dp[i - 1][j] == dp[i][j - 1] && dp[i][j - 1] && dp[i - 1][j - 1] == dp[i][j - 1]) {
-                        dp[i][j] = dp[i][j - 1] + 1;
-                        ans = max(ans, dp[i][j]);
-                    }
-                    else if (dp[i - 1][j] == 0 || dp[i][j - 1] == 0 || dp[i - 1][j - 1] == 0)
-                        dp[i][j] = 1;
-                    else
-                        dp[i][j] = min({dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]}) + 1;
-                }
-                ok = true;
-            }
-        }
-
-        print(0);
-        print_vec_vec(dp);
-
-        if (!ok)
-            return 0;
-        return max(ans * ans, 1);
-    }
-
 ll _main() {
-    ll n, m; cin >> n >> m;
-
-    vec<vec<char>> a (n, vec<char>(m));
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < m; j++) 
-            cin >> a[i][j];
-
-    return print(maximalSquare(a)), 0;
+    ll n; cin >> n;
+    return print((n % 2 == 1 ? 'a' : 'b')), 0;
 }
 
 

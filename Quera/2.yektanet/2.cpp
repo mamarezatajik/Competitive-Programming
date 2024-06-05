@@ -35,51 +35,61 @@ using namespace __gnu_pbds;
 ll mod = 1e9 + 7;
 
 
-    int maximalSquare(vector<vector<char>>& matrix) {
-        int n = matrix.size();
-        int m = matrix[0].size();
+ll _main() {
+    ll n; cin >> n;
+    string s;
+    map<string, int> m;
 
-        vector<vector<int>> dp (n, vector<int>(m));
-        bool ok = false;
-        int ans = INT_MIN;
+    m["white"] = 0, m["red"] = 1;
+    m["yellow"] = 2, m["green"] = 3;
+    m["brown"] = 4, m["blue"] = 5;
+    m["pink"] = 6, m["black"] = 7;
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (matrix[i][j] == '0')
-                    continue;
-                if (i == 0 || j == 0)
-                    dp[i][j] = 1;
-                else {
-                    if (dp[i - 1][j] == dp[i][j - 1] && dp[i][j - 1] && dp[i - 1][j - 1] == dp[i][j - 1]) {
-                        dp[i][j] = dp[i][j - 1] + 1;
-                        ans = max(ans, dp[i][j]);
-                    }
-                    else if (dp[i - 1][j] == 0 || dp[i][j - 1] == 0 || dp[i - 1][j - 1] == 0)
-                        dp[i][j] = 1;
-                    else
-                        dp[i][j] = min({dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]}) + 1;
-                }
-                ok = true;
-            }
+    int first = 0, second = 0;
+    bool put = false, turn = true;
+    int red_cnt = 0;
+
+    while (n--) {
+        cin >> s;
+
+        if (s == "red") {
+            red_cnt++;
+            if (turn)
+                first += m[s];
+            else
+                second += m[s];
+            put = true;
         }
-
-        print(0);
-        print_vec_vec(dp);
-
-        if (!ok)
-            return 0;
-        return max(ans * ans, 1);
+        else if (s == "white" || s == "miss")
+            turn = !turn, put = false;
+        else {
+            if (m[s] == -1)
+                return print("Invalid"), 0;
+            if (put) {
+                if (turn)
+                    first += m[s];
+                else
+                    second += m[s];
+                if (red_cnt == 15)
+                    m[s] = -1;
+            } 
+            else
+                turn = !turn;
+            put = false;
+        }
     }
 
-ll _main() {
-    ll n, m; cin >> n >> m;
 
-    vec<vec<char>> a (n, vec<char>(m));
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < m; j++) 
-            cin >> a[i][j];
+    if (red_cnt > 15)
+        print("Invalid");
+    else if (first > second)
+        print("First");
+    else if (first == second)
+        print("Tie");
+    else
+        print("Second");
 
-    return print(maximalSquare(a)), 0;
+    return 0;
 }
 
 
