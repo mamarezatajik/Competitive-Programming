@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "GCC",
+            "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**"
             ],
@@ -12,9 +12,9 @@
             ],
             "windowsSdkVersion": "10.0.22000.0",
             "compilerPath": "C:\\msys64\\ucrt64\\bin\\g++.exe",
-            "cStandard": "c23",
-            "cppStandard": "c++23",
-            "intelliSenseMode": "windows-gcc-x64"
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64"
         }
     ],
     "version": 4
