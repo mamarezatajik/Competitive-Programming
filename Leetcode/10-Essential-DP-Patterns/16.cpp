@@ -37,7 +37,23 @@ ll mod = 1e9 + 7;
 
     int minDistance(string word1, string word2) {
         int n = word1.size(), m = word2.size();
-        return 0;
+        vector<vector<int>> dp(n + 1, vector<int>(m + 1));
+
+        for (int i = 0; i < n + 1; i++) {
+            for (int j = 0; j < m + 1; j++) {
+                if (i == 0)
+                    dp[i][j] = j;
+                else if (j == 0)
+                    dp[i][j] = i;
+                else {
+                    dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + 1;
+                    dp[i][j] = min(dp[i][j], (word1[i - 1] == word2[j - 1]) 
+                        ? dp[i - 1][j - 1] : dp[i - 1][j - 1] + 1);
+                }
+            }
+        }
+
+        return dp[n][m];
     }
 
 ll _main() {
@@ -50,7 +66,7 @@ signed main() {
     fast_io;
 
     int tc = 1;
-    cin >> tc;
+    // cin >> tc;
     while (tc--)
         _main();
 
