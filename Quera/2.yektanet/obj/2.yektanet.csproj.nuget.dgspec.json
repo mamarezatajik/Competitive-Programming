@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "e:\\git\\Competitive-Programming\\Quera\\2.yektanet\\2.yektanet.csproj": {}
+    "E:\\git\\Competitive-Programming\\Quera\\2.yektanet\\2.yektanet.csproj": {}
   },
   "projects": {
-    "e:\\git\\Competitive-Programming\\Quera\\2.yektanet\\2.yektanet.csproj": {
+    "E:\\git\\Competitive-Programming\\Quera\\2.yektanet\\2.yektanet.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "e:\\git\\Competitive-Programming\\Quera\\2.yektanet\\2.yektanet.csproj",
+        "projectUniqueName": "E:\\git\\Competitive-Programming\\Quera\\2.yektanet\\2.yektanet.csproj",
         "projectName": "2.yektanet",
-        "projectPath": "e:\\git\\Competitive-Programming\\Quera\\2.yektanet\\2.yektanet.csproj",
+        "projectPath": "E:\\git\\Competitive-Programming\\Quera\\2.yektanet\\2.yektanet.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "e:\\git\\Competitive-Programming\\Quera\\2.yektanet\\obj\\",
+        "outputPath": "E:\\git\\Competitive-Programming\\Quera\\2.yektanet\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -35,6 +39,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -56,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100-rc.2.23502.2/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
