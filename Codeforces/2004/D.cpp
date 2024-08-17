@@ -14,78 +14,73 @@ const ll maxN = 2e5 + 10;
 const ll inf  = 7e18 + 7;
 const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
-string a[maxN];
-unordered_map<string, vector<ll>> m;
+
+string cities[maxN];
+map<string, vector<ll>> cityIndices;
+
+bool haveCommonChar(ll x, ll y) {
+    bool ok = false;
+
+    if (cities[x][0] == cities[y][0] ||
+        cities[x][0] == cities[y][1] ||
+        cities[x][1] == cities[y][0] ||
+        cities[x][1] == cities[y][1])
+            ok = true;
+
+    if (ok) {
+        cout << y - x << '\n';
+        return true; }
+
+    return false;
+}
 
 ll _main() {
     ll n, q; cin >> n >> q;
+    cityIndices.clear();
 
-    m.clear();
     for (ll i = 0; i < n; i++) {
-        cin >> a[i];
-        m[a[i]].push_back(i);
+        cin >> cities[i];
+        cityIndices[cities[i]].push_back(i);
     }
 
+    vector<string> allCities;
+    for (auto [city, indices]: cityIndices)
+        allCities.push_back(city);
 
-    while (q--) {
+    for (ll i = 0; i < q; i++) {
         ll x, y; cin >> x >> y;
-        x--, y--;
-        if (y < x)
+        if (x > y)
             swap(x, y);
-        if (a[x][0] == a[y][0] ||
-            a[x][0] == a[y][1] ||
-            a[x][1] == a[y][0] ||
-            a[x][1] == a[y][1]) {
-                cout << abs(y - x) << '\n';
-                continue;
-            }
+        x--, y--;
 
-        vector<string> cities (4);
-        for (ll i = 0; i < 2; i++) 
-            for (ll j = 0; j < 2; j++) {
-                cities[i * 2 + j] += a[x][i];
-                cities[i * 2 + j] += a[y][j];
-                sort(cities[i * 2 + j].begin(), cities[i * 2 + j].end());
-            }
-
-        bool foundMid = false;
-        for (auto city : cities) {
-            vector<ll> v = m[city];
-            if (!len(v))
-                continue;
-            ll idx = lower_bound(all(v), x) - v.begin();
-            if (0 <= idx && idx < len(v) && x < v[idx] && v[idx] < y)
-                foundMid = true;
-        }
-        if (foundMid) {
-            cout << abs(y - x) << '\n';
+        if (haveCommonChar(x, y))
             continue;
-        }
 
-        ll best = inf;
-        for (auto city : cities) {    
-            vector<ll> v = m[city];
-            if (!len(v))
+        ll minDistance = inf;
+        bool isBetween = false;
+        for (string city : allCities) {
+            if (city == cities[x] || city == cities[y])
                 continue;
-            ll idx = lower_bound(all(v), y) - v.begin();
-            if (0 <= idx && idx < len(v) && v[idx] > y)
-                best = min(best, v[idx] - y);
+
+            auto cityIndex = lower_bound(all(cityIndices[city]), x);
+            if (cityIndex != cityIndices[city].end()) {
+                minDistance = min(minDistance, *cityIndex - y);
+                if (*cityIndex <= y)
+                    isBetween = true;
+            }
+            if (cityIndex != cityIndices[city].begin())
+                minDistance = min(minDistance, x - *(cityIndex - 1));
         }
 
-        for (auto city : cities) {
-            vector<ll> v = m[city];
-            if (!len(v))
-                continue;
-            ll idx = lower_bound(all(v), x) - v.begin();
-            if (0 <= idx && idx < len(v) && x > v[idx])
-                best = min(best, x - v[idx]);
-            idx--;
-            if (0 <= idx && idx < len(v) && x > v[idx])
-                best = min(best, x - v[idx]);
-        }
-
-        cout << (best == inf ? -1 : ((abs(y - x)) + (2 * best))) << '\n';
+        if (minDistance == inf)
+            cout << -1;
+        else if (isBetween)
+            cout << y - x;
+        else
+            cout << (y - x) + (2 * minDistance);
+        cout << '\n';
     }
+
 
     return 0;
 }
