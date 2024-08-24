@@ -25,6 +25,7 @@
         "limits": "cpp",
         "barrier": "cpp",
         "latch": "cpp",
-        "semaphore": "cpp"
+        "semaphore": "cpp",
+        "any": "cpp"
     }
 }
