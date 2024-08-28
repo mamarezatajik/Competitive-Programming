@@ -26,6 +26,7 @@
         "barrier": "cpp",
         "latch": "cpp",
         "semaphore": "cpp",
-        "any": "cpp"
+        "any": "cpp",
+        "ostream": "cpp"
     }
 }
