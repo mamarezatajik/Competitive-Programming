@@ -15,39 +15,28 @@ const ll inf  = 7e18 + 7;
 const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
 
-ll a[maxN], n, m, Find[maxN], Size[maxN], done, ans;
-vector<pair<ll, pll>> edges;
+ll a[maxN], n, m, vis[maxN], ans;
+vector<pll> adj[maxN];
 
-void make_set(ll u) {
-    Find[u] = u;
-    Size[u] = 1;
-}
+void Prim(ll node) {
+    priority_queue<pll, vector<pll>, greater<pll>> pq;
+    pq.push({0, node});
 
-ll find_set(ll u) {
-    if (Find[u] != u) {
-        Find[u] = find_set(Find[u]);
+    while (!pq.empty()) {
+        auto [d, u] = pq.top();
+        pq.pop();
+        if (vis[u]) {
+            continue;
+        }
+        ans += d;
+        vis[u] = true;
+        for (auto [v, w]: adj[u]) {
+            if (vis[v]) {
+                continue;
+            }
+            pq.push({w, v});
+        }
     }
-    return Find[u];
-}
-
-bool union_sets(ll u, ll v) {
-    u = find_set(u);
-    v = find_set(v);
-
-    if (u == v) {
-        return false;
-    }
-
-    if (Size[u] < Size[v]) {
-        swap(u, v);
-    }
-
-    Size[u] += Size[v];
-    Find[v] = u;
-    if (Size[u] == n) {
-        done = true;
-    }
-    return true;
 }
 
 
@@ -63,35 +52,21 @@ ll _main() {
     }
 
     for (ll i = 0; i < n; i++) {
-        edges.push_back({a[mn] + a[i], {mn, i}});
+        adj[mn].push_back({i, a[i] + a[mn]});
+        adj[i].push_back({mn, a[i] + a[mn]});
     }
 
     for (ll i = 0; i < m; i++) {
         ll u, v, w;
         cin >> u >> v >> w;
         u--, v--;
-        edges.push_back({w, {u, v}});
+
+        adj[u].push_back({v, w});
+        adj[v].push_back({u, w});
     }
 
-    sort(all(edges));
-    m += n;
-
-    for (ll i = 0; i < n; i++) {
-        make_set(i);
-    }
-
-    done = false;
     ans = 0;
-    for (ll i = 0; i < m; i++) {
-        auto [u, v] = edges[i].S;
-        ll w = edges[i].F;
-        if (union_sets(u, v)) {
-            ans += w;
-        }
-        if (done) {
-            break;
-        }
-    }
+    Prim(0);
 
     return cout << ans, 0;
 }

@@ -27,6 +27,7 @@
         "latch": "cpp",
         "semaphore": "cpp",
         "any": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "*.tcc": "cpp"
     }
 }

@@ -10,17 +10,17 @@ typedef pair<ll, ll>        pll;
 #define len(a)              (ll) (a.size())
 #define all(a)              (a).begin(), (a).end()
 
-const ll maxN = 2e5 + 10;
+const ll maxN = 1e5 + 10;
 const ll inf  = 7e18 + 7;
 const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
 
-ll a[maxN], n, m, Find[maxN], Size[maxN], done, ans;
+ll a[maxN], special[maxN], Find[maxN], Size[maxN], done, n, m, k;
 vector<pair<ll, pll>> edges;
 
 void make_set(ll u) {
     Find[u] = u;
-    Size[u] = 1;
+    Size[u] = special[u];
 }
 
 ll find_set(ll u) {
@@ -30,12 +30,12 @@ ll find_set(ll u) {
     return Find[u];
 }
 
-bool union_sets(ll u, ll v) {
+void union_sets(ll u, ll v) {
     u = find_set(u);
     v = find_set(v);
 
     if (u == v) {
-        return false;
+        return;
     }
 
     if (Size[u] < Size[v]) {
@@ -44,26 +44,24 @@ bool union_sets(ll u, ll v) {
 
     Size[u] += Size[v];
     Find[v] = u;
-    if (Size[u] == n) {
-        done = true;
+    if (Size[u] == k) {
+        done = 1;
     }
-    return true;
 }
 
 
 ll _main() {
-    cin >> n >> m;
+    cin >> n >> m >> k;
 
-    ll mn = 0;
-    for (ll i = 0; i < n; i++) {
-        cin >> a[i];
-        if (a[mn] > a[i]) {
-            mn = i;
-        }
+    for (ll i = 0; i < k; i++) {
+        ll node;
+        cin >> node;
+        node--;
+        special[node] = true;
     }
 
     for (ll i = 0; i < n; i++) {
-        edges.push_back({a[mn] + a[i], {mn, i}});
+        make_set(i);
     }
 
     for (ll i = 0; i < m; i++) {
@@ -74,26 +72,21 @@ ll _main() {
     }
 
     sort(all(edges));
-    m += n;
 
-    for (ll i = 0; i < n; i++) {
-        make_set(i);
-    }
-
-    done = false;
-    ans = 0;
+    done = 0;
     for (ll i = 0; i < m; i++) {
         auto [u, v] = edges[i].S;
-        ll w = edges[i].F;
-        if (union_sets(u, v)) {
-            ans += w;
-        }
+        union_sets(u, v);
+
         if (done) {
-            break;
+            for (ll j = 0; j < k; j++) {
+                cout << edges[i].F << ' ';
+            }
+            return 0;
         }
     }
 
-    return cout << ans, 0;
+    return 0;
 }
 
 

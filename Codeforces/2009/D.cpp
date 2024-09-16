@@ -10,19 +10,23 @@ typedef pair<ll, ll>        pll;
 #define len(a)              (ll) (a.size())
 #define all(a)              (a).begin(), (a).end()
 
-const ll maxN = 2e6 + 10;
+const ll maxN = 2e5 + 10;
 const ll inf  = 7e18 + 7;
 const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
 
+ll a[maxN][2];
 
 ll _main() {
     ll n;
     cin >> n;
 
-    vector<vector<bool>> a (n + 1, vector<bool>(2, false));
+    for (ll i = 0; i < maxN; i++) {
+        a[i][0] = a[i][1] = false;
+    }
+
     for (ll i = 0; i < n; i++) {
-        ll x, y;
+        int x, y;
         cin >> x >> y;
         a[x][y] = true;
     }
@@ -32,7 +36,7 @@ ll _main() {
         if (a[i][0] && a[i][0] == a[i][1]) {
             ans += (n - 2);
         }
-        if (i == 0 || i == n - 1) {
+        if (i == 0 || i == n) {
             continue;
         }
         for (ll j = 0; j < 2; j++) {

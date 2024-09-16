@@ -10,51 +10,46 @@ typedef pair<ll, ll>        pll;
 #define len(a)              (ll) (a.size())
 #define all(a)              (a).begin(), (a).end()
 
-const ll maxN = 2e6 + 10;
+const ll maxN = 1e5 + 10;
 const ll inf  = 7e18 + 7;
 const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
+ll add(ll a, ll b) {
+    a *= pow(10, len(to_string(b)));
+    a += b;
+}
 
-ll a[maxN], ps[maxN], sum, n, q;
+ll n, m, dist[maxN];
+vector<pll> adj[maxN];
 
-ll query(ll idx) {
-    ll cnt = idx / n;
-    ll rem = idx % n;
 
-    ll ans = cnt * sum;
-    ll diff = 0;
+void Dijkstra(ll src) {
+    dist[src] = 0;
+    priority_queue<pll, vector<pll>, greater<pll>> pq;
+    pq.push({dist[src], src});
 
-    if (rem != 0) {
-        if (rem + cnt <= n) {
-            diff = ps[rem + cnt] - ps[cnt];
-        }
-        else {
-            diff = sum - ps[cnt] + ps[rem + cnt - n];
-        }
-    }
+    
 
-    return ans + diff;
 }
 
 
 ll _main() {
-    cin >> n >> q;
+    cin >> n >> m;
+    ll w = 1;
 
-    ps[0] = 0;
     for (ll i = 0; i < n; i++) {
-        cin >> a[i];
-        ps[i + 1] = ps[i] + a[i];
-    }
-    sum = ps[n];
-
-    while (q--) {
-        ll l, r;
-        cin >> l >> r;
-
-        cout << query(r) - query(l - 1) << '\n';
+        ll x, y;
+        cin >> x >> y;
+        x--, y--;
+        adj[x].push_back({y, w});
+        adj[y].push_back({x, w});
+        w++;
     }
 
-    return 0;
+    Dijkstra(0);
+
+
+    return cout << "" << '\n', 0;
 }
 
 
