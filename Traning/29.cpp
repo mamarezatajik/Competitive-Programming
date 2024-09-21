@@ -1,65 +1,32 @@
 #include <bits/stdc++.h>
+
 using namespace std;
 
-typedef long long           ll;
-typedef long double         ld;
-typedef pair<ll, ll>        pll;
+int n, k, p;
 
-#define F                   first
-#define S                   second
-#define len(a)              (ll) (a.size())
-#define all(a)              (a).begin(), (a).end()
-
-const ll maxN = 1e5 + 10;
-const ll inf  = 7e18 + 7;
-const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
-
-ll add(ll a, ll b) {
-    a *= pow(10, len(to_string(b)));
-    a += b;
-}
-
-ll n, m, dist[maxN];
-vector<pll> adj[maxN];
-
-
-void Dijkstra(ll src) {
-    dist[src] = 0;
-    priority_queue<pll, vector<pll>, greater<pll>> pq;
-    pq.push({dist[src], src});
-
-    
-
-}
-
-
-ll _main() {
-    cin >> n >> m;
-    ll w = 1;
-
-    for (ll i = 0; i < n; i++) {
-        ll x, y;
-        cin >> x >> y;
-        x--, y--;
-        adj[x].push_back({y, w});
-        adj[y].push_back({x, w});
-        w++;
-    }
-
-    Dijkstra(0);
-
-
-    return cout << "" << '\n', 0;
-}
-
-
-signed main() {
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-
-    int tc = 1;
-    cin >> tc;
-    while (tc--)
-        _main();
-
-    return 0;
+int main(){
+	// freopen("test.txt","r",stdin);
+	cin.sync_with_stdio(0); cin.tie(0);
+	cin >> n >> k >> p;
+	vector<int> ps, ks;
+	for (int i=0; i<n; ++i){
+		int x; cin >> x;
+		ps.push_back(x);
+	}
+	for(int i=0; i<k; ++i){
+		int x; cin >> x;
+		ks.push_back(x);
+	}
+	sort(ps.begin(), ps.end());
+	sort(ks.begin(), ks.end());
+	int best = 2e9;
+	for (int st=0; st <= k - n; ++st){
+		int bestlen = 0;
+		for (int i = st; i<st + n; ++i){
+			bestlen = max(bestlen, abs(ks[i] - p) + abs(ks[i] - ps[i-st]));
+		}
+		best = min(best, bestlen);
+	}
+	cout << best;
+	return 0;
 }
