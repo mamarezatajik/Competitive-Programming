@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "random": "cpp",
+        "bitset": "cpp",
+        "coroutine": "cpp",
+        "string_view": "cpp",
+        "typeindex": "cpp",
+        "variant": "cpp",
+        "array": "cpp",
+        "any": "cpp",
+        "ranges": "cpp",
+        "span": "cpp",
+        "stacktrace": "cpp",
+        "regex": "cpp"
+    }
+}
