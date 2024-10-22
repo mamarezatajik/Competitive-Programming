@@ -5,65 +5,66 @@ typedef long long           ll;
 typedef long double         ld;
 typedef pair<ll, ll>        pll;
 
-mt19937_64 rng((unsigned ll) chrono::steady_clock::now().time_since_epoch().count());
-
 #define F                   first
 #define S                   second
 #define len(a)              (ll) (a.size())
 #define all(a)              (a).begin(), (a).end()
 
-const ll maxN = 2e5 + 10;
-const ll inf  = 7e18 + 7;
+const ll maxN = 1e5 + 10;
+const ll inf  = 1e10 + 7;
 const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
 
-ll vis[maxN], dist[maxN], n, m, start = 0;
+ll a[maxN], dist[maxN];
 vector<pll> adj[maxN];
 
-void Dijkstra(ll src) {
-    fill(dist + 1, dist + n + 1, inf);
+void Dijkstra(ll src, ll n, ll k) {
     dist[src] = 0;
     priority_queue<pll, vector<pll>, greater<pll>> pq;
     pq.push({dist[src], src});
 
     while (!pq.empty()) {
-        ll u = pq.top().second;
+        auto [d, u] = pq.top();
         pq.pop();
-        if (vis[u]) {
-            continue;
-        }
 
         for (auto [v, w]: adj[u]) {
-            if (dist[v] > dist[u] + w) {
-                dist[v] = dist[u] + w;
-                pq.push({ dist[v], v});
+            if (dist[v] > d + w) {
+                dist[v] = d + w;
+                pq.push({dist[v], v});
             }
         }
-        vis[u] = true;
     }
 }
 
 
 ll _main() {
-    cin >> n >> m;
+    ll n, m, k; 
+    cin >> n >> m >> k;
+
+    for (ll i = 0; i < n; i++) {
+        cin >> a[i];
+        adj[n].push_back({i, a[i]});
+        adj[i].push_back({n, a[i]});
+    }
 
     for (ll i = 0; i < m; i++) {
         ll u, v, w;
         cin >> u >> v >> w;
-        adj[u].push_back({v, w << 1});
-        adj[v].push_back({u, w << 1});
+        u--, v--;
+        adj[u].push_back({v, w});
+        adj[v].push_back({u, w});
     }
 
-    for (ll v = 1; v <= n; v++) {
-        ll w;
-        cin >> w;
-        adj[start].push_back({v, w});
-    }
+    for (ll i = 0; i < k; i++) {
+        ll src;
+        cin >> src;
+        src--;
 
-    Dijkstra(start);
-
-    for (ll i = 1; i <= n; i++) {
-        cout << dist[i] << " \0"[i == n];
+        fill(dist, dist + n + 1, inf);
+        Dijkstra(src, n, k);
+        for (ll i = 0; i < n; i++) {
+            cout << dist[i] << " \n"[i == n - 1];
+        }
     }
 
     return 0;

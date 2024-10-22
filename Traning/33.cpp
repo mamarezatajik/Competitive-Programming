@@ -17,12 +17,17 @@ const ll inf  = 7e18 + 7;
 const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
 
-ll vis[maxN], dist[maxN], n, m, start = 0;
+ll n, m, k, ctr = 0;
+vector<pair<ll, pll>> edges;
 vector<pll> adj[maxN];
+vector<ll> ans;
+set<ll> nodes;
+
 
 void Dijkstra(ll src) {
-    fill(dist + 1, dist + n + 1, inf);
+    vector<ll> dist (n, inf), vis (n, false);
     dist[src] = 0;
+
     priority_queue<pll, vector<pll>, greater<pll>> pq;
     pq.push({dist[src], src});
 
@@ -41,32 +46,46 @@ void Dijkstra(ll src) {
         }
         vis[u] = true;
     }
+
+    for (ll i = src + 1; i < n; i++) {
+        if (dist[i] != inf) {
+            ans.push_back(dist[i]);
+        }
+    }
 }
 
-
 ll _main() {
-    cin >> n >> m;
+    cin >> n >> m >> k;
 
     for (ll i = 0; i < m; i++) {
         ll u, v, w;
         cin >> u >> v >> w;
-        adj[u].push_back({v, w << 1});
-        adj[v].push_back({u, w << 1});
+        u--, v--;
+        edges.push_back({w, {u, v}});
     }
 
-    for (ll v = 1; v <= n; v++) {
-        ll w;
-        cin >> w;
-        adj[start].push_back({v, w});
+    sort(all(edges));
+
+    for (ll i = 0; i < m; i++) {
+        ll w = edges[i].F;
+        auto [u, v] = edges[i].S;
+        adj[u].push_back({v, w});
+        adj[v].push_back({u, w});
+        nodes.insert(u);
+        nodes.insert(v);
+        ctr++;
+        if (ctr == k) {
+            break;
+        }
     }
 
-    Dijkstra(start);
-
-    for (ll i = 1; i <= n; i++) {
-        cout << dist[i] << " \0"[i == n];
+    for (ll node: nodes) {
+        Dijkstra(node);
     }
 
-    return 0;
+    sort(all(ans));
+
+    return cout << ans[k - 1], 0;
 }
 
 

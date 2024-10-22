@@ -12,61 +12,70 @@ mt19937_64 rng((unsigned ll) chrono::steady_clock::now().time_since_epoch().coun
 #define len(a)              (ll) (a.size())
 #define all(a)              (a).begin(), (a).end()
 
-const ll maxN = 2e5 + 10;
+const ll maxN = 4e5 + 10;
 const ll inf  = 7e18 + 7;
+const ll lg   = 20   + 2;
 const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
 
-ll vis[maxN], dist[maxN], n, m, start = 0;
+ll n, m, k, q, u, v, w, x, y, z, l, r, ans;
+ll a[maxN], b, ps[maxN];
 vector<pll> adj[maxN];
 
-void Dijkstra(ll src) {
-    fill(dist + 1, dist + n + 1, inf);
+vector<ll> dijkstra(ll src) {
+    vector<ll> dist (n + 1, inf);
+    vector<bool> vis (n + 1, false);
     dist[src] = 0;
+
     priority_queue<pll, vector<pll>, greater<pll>> pq;
     pq.push({dist[src], src});
 
-    while (!pq.empty()) {
-        ll u = pq.top().second;
+    while(!pq.empty()) {
+        ll u = pq.top().S;
         pq.pop();
         if (vis[u]) {
             continue;
         }
-
+        vis[u] = true;
         for (auto [v, w]: adj[u]) {
             if (dist[v] > dist[u] + w) {
                 dist[v] = dist[u] + w;
-                pq.push({ dist[v], v});
+                pq.push({dist[v], v});
             }
         }
-        vis[u] = true;
     }
+
+    return dist;
 }
 
 
 ll _main() {
-    cin >> n >> m;
-
-    for (ll i = 0; i < m; i++) {
-        ll u, v, w;
-        cin >> u >> v >> w;
-        adj[u].push_back({v, w << 1});
-        adj[v].push_back({u, w << 1});
-    }
-
-    for (ll v = 1; v <= n; v++) {
-        ll w;
-        cin >> w;
-        adj[start].push_back({v, w});
-    }
-
-    Dijkstra(start);
-
+    cin >> n;
     for (ll i = 1; i <= n; i++) {
-        cout << dist[i] << " \0"[i == n];
+        adj[i].clear();
+        cin >> a[i];
+        ps[i] = ps[i - 1] + a[i];
+    }
+    for (ll i = 1; i <= n; i++) {
+        cin >> b;
+        adj[i].push_back({b, a[i]});
     }
 
-    return 0;
+    for (ll i = n; i >= 2; i--) {
+        adj[i].push_back({i - 1, 0});
+    }
+
+    vector<ll> dist = dijkstra(1);
+
+    ll ans = 0;
+    for (ll i = 1; i <= n; i++) {
+        if (dist[i] == inf) {
+            continue;
+        }
+        ans = max(ans, ps[i] - dist[i]);
+    }
+
+    return cout << ans << '\n', 0;
 }
 
 
@@ -74,9 +83,9 @@ signed main() {
     ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
 
     int tc = 1;
-    // cin >> tc;
-    while (tc--)
+    cin >> tc;
+    while (tc--) {
         _main();
-
+    }
     return 0;
 }

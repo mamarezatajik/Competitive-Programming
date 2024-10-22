@@ -12,31 +12,41 @@ mt19937_64 rng((unsigned ll) chrono::steady_clock::now().time_since_epoch().coun
 #define len(a)              (ll) (a.size())
 #define all(a)              (a).begin(), (a).end()
 
-const ll maxN = 2e5 + 10;
+const ll maxN = 1e5 + 10;
 const ll inf  = 7e18 + 7;
 const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
 
-ll vis[maxN], dist[maxN], n, m, start = 0;
+ll a[maxN], vis[maxN], dist[maxN], n, m, dst;
 vector<pll> adj[maxN];
+set<ll> times[maxN];
 
 void Dijkstra(ll src) {
-    fill(dist + 1, dist + n + 1, inf);
-    dist[src] = 0;
-    priority_queue<pll, vector<pll>, greater<pll>> pq;
-    pq.push({dist[src], src});
+    fill(dist, dist + n + 1, inf);
+    dst = 0;
+    while (times[src].count(dst)) {
+        dst++;
+    }
+    dist[src] = dst;
+    set<pll> pq;
+    pq.insert({dist[src], src});
 
     while (!pq.empty()) {
-        ll u = pq.top().second;
-        pq.pop();
+        auto [d, u] = (*pq.begin());
+        pq.erase(pq.begin());
         if (vis[u]) {
             continue;
         }
 
         for (auto [v, w]: adj[u]) {
-            if (dist[v] > dist[u] + w) {
-                dist[v] = dist[u] + w;
-                pq.push({ dist[v], v});
+            if (dist[v] > d + w) {
+                dst = d + w;
+                while (times[v].count(dst)) {
+                    dst++;
+                }
+                pq.erase({dist[v], v});
+                pq.insert({ dst, v});
+                dist[v] = d + w;
             }
         }
         vis[u] = true;
@@ -50,23 +60,23 @@ ll _main() {
     for (ll i = 0; i < m; i++) {
         ll u, v, w;
         cin >> u >> v >> w;
-        adj[u].push_back({v, w << 1});
-        adj[v].push_back({u, w << 1});
+        adj[u].push_back({v, w});
+        adj[v].push_back({u, w});
     }
-
-    for (ll v = 1; v <= n; v++) {
-        ll w;
-        cin >> w;
-        adj[start].push_back({v, w});
-    }
-
-    Dijkstra(start);
 
     for (ll i = 1; i <= n; i++) {
-        cout << dist[i] << " \0"[i == n];
+        ll k;
+        cin >> k;
+        for (ll j = 0; j < k; j++) {
+            ll t;
+            cin >> t;
+            times[i].insert(t);
+        }
     }
 
-    return 0;
+    Dijkstra(1);
+
+    return cout << (dist[n] == inf ? -1 : dist[n]) << '\n', 0;
 }
 
 
