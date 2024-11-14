@@ -4,7 +4,6 @@ using namespace std;
 typedef long long           ll;
 typedef long double         ld;
 typedef pair<ll, ll>        pll;
-typedef pair<pll, ll>       ppl;
 
 mt19937_64 rng((unsigned ll) chrono::steady_clock::now().time_since_epoch().count());
 
@@ -21,31 +20,37 @@ const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
 ll n, m, k, q, u, v, w, x, y, z, l, r;
 
+bool ok(ll n) {
+    if (n <= 5) {
+        return false;
+    }
+
+    set<ll> divisors;
+    ll div = 2;
+    while (n > 1) {
+        if (n % div == 0) {
+            n /= div;
+            divisors.insert(div);
+            continue;
+        }
+        div++;
+    }
+
+    return len(divisors) == 2;
+}
+
 
 ll _main() {
-    string s;
-    ll Q_num, Period;
-    priority_queue<ppl, vector<ppl>, greater<ppl>> pq;
-    while (true) {
-        cin >> s;
-        if (s == "#") {
-            break;
+    cin >> n;
+    ll ans = 0;
+
+    for (ll i = 1; i <= n; i++) {
+        if (ok(i)) {
+            ans++;
         }
-        cin >> Q_num >> Period;
-        pq.push({{Period, Q_num}, Period});
     }
 
-    cin >> k;
-    while (k--) {
-        auto [tmp, period] = pq.top();
-        auto [time, q_num] = tmp;
-
-        cout << q_num << '\n';
-        pq.pop();
-        pq.push({{time + period, q_num}, period});
-    }
-
-    return 0;
+    return cout << ans, 0;
 }
 
 

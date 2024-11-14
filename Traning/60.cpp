@@ -4,7 +4,6 @@ using namespace std;
 typedef long long           ll;
 typedef long double         ld;
 typedef pair<ll, ll>        pll;
-typedef pair<pll, ll>       ppl;
 
 mt19937_64 rng((unsigned ll) chrono::steady_clock::now().time_since_epoch().count());
 
@@ -19,30 +18,33 @@ const ll lg   = 20   + 2;
 const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
 
-ll n, m, k, q, u, v, w, x, y, z, l, r;
-
+ll n, m, k, q, u, v, w, x, y, z, l, r, ctr = 1;
+string s;
 
 ll _main() {
-    string s;
-    ll Q_num, Period;
-    priority_queue<ppl, vector<ppl>, greater<ppl>> pq;
-    while (true) {
-        cin >> s;
-        if (s == "#") {
+    while (cin >> s) {
+        if (s == "end") {
             break;
         }
-        cin >> Q_num >> Period;
-        pq.push({{Period, Q_num}, Period});
-    }
 
-    cin >> k;
-    while (k--) {
-        auto [tmp, period] = pq.top();
-        auto [time, q_num] = tmp;
+        n = len(s);
+        vector<stack<char>> ans (1, stack<char>());
+        ans[0].push(s[0]);
+        for (ll i = 1; i < n; i++) {
+            bool found = false;
+            for (ll j = 0; j < len(ans); j++) {
+                if (!found && s[i] <= ans[j].top()) {
+                    ans[j].push(s[i]);
+                    found = true;
+                }
+            }
+            if (!found) {
+                ans.push_back(stack<char>());
+                ans.back().push(s[i]);
+            }
+        }
 
-        cout << q_num << '\n';
-        pq.pop();
-        pq.push({{time + period, q_num}, period});
+        cout << "Case " << ctr++ << ": " << len(ans) << '\n';
     }
 
     return 0;

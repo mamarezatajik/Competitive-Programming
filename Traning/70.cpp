@@ -4,7 +4,6 @@ using namespace std;
 typedef long long           ll;
 typedef long double         ld;
 typedef pair<ll, ll>        pll;
-typedef pair<pll, ll>       ppl;
 
 mt19937_64 rng((unsigned ll) chrono::steady_clock::now().time_since_epoch().count());
 
@@ -13,37 +12,41 @@ mt19937_64 rng((unsigned ll) chrono::steady_clock::now().time_since_epoch().coun
 #define len(a)              (ll) (a.size())
 #define all(a)              (a).begin(), (a).end()
 
-const ll maxN = 2e6 + 10;
+const ll maxN = 1e7 + 10;
 const ll inf  = 7e18 + 7;
 const ll lg   = 20   + 2;
 const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
 
 ll n, m, k, q, u, v, w, x, y, z, l, r;
+bool is_prime[maxN];
 
 
 ll _main() {
-    string s;
-    ll Q_num, Period;
-    priority_queue<ppl, vector<ppl>, greater<ppl>> pq;
-    while (true) {
-        cin >> s;
-        if (s == "#") {
-            break;
+    cin >> n;
+    for (ll i = 1; i <= n; i++) {
+        is_prime[i] = true;
+    }
+
+    ll ans = 0;
+    for (ll i = 2; i <= n; i++) {
+        if (is_prime[i]) {
+            ll j = 2 * i;
+            while (j <= n) {
+                is_prime[j] = false;
+                j += i;
+            }
+            ans++;
         }
-        cin >> Q_num >> Period;
-        pq.push({{Period, Q_num}, Period});
     }
 
-    cin >> k;
-    while (k--) {
-        auto [tmp, period] = pq.top();
-        auto [time, q_num] = tmp;
-
-        cout << q_num << '\n';
-        pq.pop();
-        pq.push({{time + period, q_num}, period});
+    cout << ans << '\n';
+    for (ll i = 2; i <= n; i++) {
+        if (is_prime[i]) {
+            cout << i << ' ';
+        }
     }
+
 
     return 0;
 }

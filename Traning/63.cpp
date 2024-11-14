@@ -4,7 +4,6 @@ using namespace std;
 typedef long long           ll;
 typedef long double         ld;
 typedef pair<ll, ll>        pll;
-typedef pair<pll, ll>       ppl;
 
 mt19937_64 rng((unsigned ll) chrono::steady_clock::now().time_since_epoch().count());
 
@@ -20,29 +19,38 @@ const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
 
 ll n, m, k, q, u, v, w, x, y, z, l, r;
+ll a[maxN];
 
 
 ll _main() {
-    string s;
-    ll Q_num, Period;
-    priority_queue<ppl, vector<ppl>, greater<ppl>> pq;
     while (true) {
-        cin >> s;
-        if (s == "#") {
+        cin >> n;
+        if (n == 0) {
             break;
         }
-        cin >> Q_num >> Period;
-        pq.push({{Period, Q_num}, Period});
-    }
 
-    cin >> k;
-    while (k--) {
-        auto [tmp, period] = pq.top();
-        auto [time, q_num] = tmp;
-
-        cout << q_num << '\n';
-        pq.pop();
-        pq.push({{time + period, q_num}, period});
+        map<string, ll> cnt;
+        ll mxm = -inf;
+        for (ll i = 1; i <= n; i++) {
+            vector<ll> tmp (5);
+            for (ll j = 0; j < 5; j++) {
+                cin >> tmp[j];
+            }
+            sort(all(tmp));
+            string key = "";
+            for (ll j = 0; j < 5; j++) {
+                key += to_string(tmp[j]) + ',';
+            }
+            cnt[key]++;
+            mxm = max(mxm, cnt[key]);
+        }
+        ll ans = 0;
+        for (auto [k, v]: cnt) {
+            if (v == mxm) {
+                ans++;
+            }
+        }
+        cout << (ans * mxm) << '\n';
     }
 
     return 0;
