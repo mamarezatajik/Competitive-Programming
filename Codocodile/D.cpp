@@ -19,21 +19,20 @@ const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
 
 ll n, m, k, q, u, v, w, x, y, z, l, r;
-ll a[maxN];
 
 
 ll _main() {
     cin >> n;
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-    }
-
+    set<ll> st;
     ll ans = 0;
-    for (int i = 1; i < n; i++) {
-        for (int j = 0; j < i; j++) {
-            if (a[j] <= a[i]) {
-                ans++;
-            }
+    for (ll i = 1; i <= n; i++) {
+        cin >> x;
+        while ((x & 1) == 0) x >>= 1;
+        if (st.count(x)) {
+            ans = ans;
+        } else {
+            ans++;
+            st.insert(x);
         }
     }
 
@@ -46,7 +45,7 @@ signed main() {
     cin.tie(0), cout.tie(0);
 
     int tc = 1;
-    cin >> tc;
+    // cin >> tc;
     while (tc--) {
         _main();
     }

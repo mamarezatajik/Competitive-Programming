@@ -24,20 +24,11 @@ ll a[maxN];
 
 ll _main() {
     cin >> n;
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
+    for (ll i = 1; i <= 2 * n; i += 2) {
+        cout << i << ' ';
     }
 
-    ll ans = 0;
-    for (int i = 1; i < n; i++) {
-        for (int j = 0; j < i; j++) {
-            if (a[j] <= a[i]) {
-                ans++;
-            }
-        }
-    }
-
-    return cout << ans << '\n', 0;
+    return cout << "" << '\n', 0;
 }
 
 

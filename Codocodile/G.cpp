@@ -19,25 +19,35 @@ const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
 
 ll n, m, k, q, u, v, w, x, y, z, l, r;
-ll a[maxN];
+ll a[8][1024];
 
 
 ll _main() {
-    cin >> n;
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-    }
-
-    ll ans = 0;
-    for (int i = 1; i < n; i++) {
-        for (int j = 0; j < i; j++) {
-            if (a[j] <= a[i]) {
-                ans++;
-            }
+    cin >> n >> k;
+    for (ll i = 1; i <= n; i++) {
+        cin >> u >> v >> w;
+        for (int m = 0; m < 8; m++) {
+            ll sum = 0;
+            if (m & 1) sum += u; else sum -= u;
+            if (m & 2) sum += v; else sum -= v;
+            if (m & 4) sum += w; else sum -= w;
+            a[m][i] = sum;
         }
     }
 
-    return cout << ans << '\n', 0;
+    ll res = 0;
+    for (int i = 0; i < 8; i++) {
+        ll *b = a[i];
+        sort(b + 1, b + 1 + n);
+        reverse(b + 1, b + 1 + n);
+        ll ans = 0;
+        for (ll j = 1; j <= k; j++) {
+            ans += b[j];
+        }
+        res = max(res, ans);
+    }
+
+    return cout << res << '\n', 0;
 }
 
 
@@ -46,7 +56,7 @@ signed main() {
     cin.tie(0), cout.tie(0);
 
     int tc = 1;
-    cin >> tc;
+    // cin >> tc;
     while (tc--) {
         _main();
     }

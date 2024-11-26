@@ -18,33 +18,30 @@ const ll lg   = 20   + 2;
 const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
 
-ll n, m, k, q, u, v, w, x, y, z, l, r;
-ll a[maxN];
-
-
 ll _main() {
-    cin >> n;
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-    }
-
-    ll ans = 0;
-    for (int i = 1; i < n; i++) {
-        for (int j = 0; j < i; j++) {
-            if (a[j] <= a[i]) {
-                ans++;
+    ll A, B, C;
+    cin >> A >> B >> C;
+    for (ll x = -100; x <= 100; x++) {
+        for (ll y = -100; y <= 100; y++) {
+            for (ll z = -100; z <= 100; z++) {
+                if (x == y || x == z || y == z) {
+                    continue;
+                }
+                if (x + y + z == A &&
+                    x * y * z == B &&
+                    x * x + y * y + z * z == C) {
+                        cout << x << " " << y << " " << z << '\n';
+                        return 0;
+                    }
             }
         }
     }
 
-    return cout << ans << '\n', 0;
+    return cout << "No solution.\n",0;
 }
 
 
 signed main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0), cout.tie(0);
-
     int tc = 1;
     cin >> tc;
     while (tc--) {

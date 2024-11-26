@@ -19,25 +19,22 @@ const ll mod  = 1e9 + 7 ; // 998244353; // 1e9 + 9;
 
 
 ll n, m, k, q, u, v, w, x, y, z, l, r;
-ll a[maxN];
 
 
 ll _main() {
-    cin >> n;
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-    }
-
-    ll ans = 0;
-    for (int i = 1; i < n; i++) {
-        for (int j = 0; j < i; j++) {
-            if (a[j] <= a[i]) {
-                ans++;
-            }
+    string s;
+    cin >> s;
+    n = len(s);
+    for (ll i = 1; i < n; i++) {
+        if (s[i] == s[i - 1]) {
+            return cout << s[i] << s[i] << '\n', 0;
+        } 
+        else if (i >= 2 && s[i] != s[i - 2]) {
+            return cout << s[i - 2] << s[i - 1] << s[i] << '\n', 0;
         }
     }
 
-    return cout << ans << '\n', 0;
+    return cout << "-1" << '\n', 0;
 }
 
 

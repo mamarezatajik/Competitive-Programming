@@ -1,0 +1,9 @@
+{
+    "cSpell.words": [
+        "lpll"
+    ],
+    "files.associations": {
+        "*.rmd": "markdown",
+        "ostream": "cpp"
+    }
+}
